@@ -1,0 +1,16 @@
+[Unit]
+Description=Internal Flask Service for PyPI Manager
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/html/flask-app
+ExecStart=/usr/bin/python3 /var/www/html/flask-app/app.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

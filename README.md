@@ -1,6 +1,6 @@
-# Chall - Your Challenge Title
+# Chall - Pied Pipyer
 
-> A brief description of the challenge
+> An SSRF to supply chain exploitation web challenge
 
 ## Challenge Type
 
@@ -9,35 +9,20 @@
 
 ## Design Type
 
-- [X] **Black**-Box
-- [ ] **White**-Box
+- [ ] **Black**-Box
+- [X] **White**-Box
 
 ## Designer(s)
 
-- Ada Lovelace
-- Barbara Liskov
+- Harsh Sawant
 
 ## Description
 
-A high-level overview intended to clarify the concept and intuition behind the challenge, outlining its educational
-goals and the skills it aims to test in participants.
-
-**IMPORTANT:** This description will **NOT** be shared with participants.
+The challenge involves exploitation of a specific type of SSRF that involves redirects to obtain private keys which can be used to sign custom packages, which when deployed via the application can then be used to trigger code execution on the system.
 
 ## Category(ies)
 
-- `pwn`
-- `re`
 - `web`
-- `stegano`
-- `env`
-- `crypto`
-- `osint`
-- `web3`
-- `ai`
-- `android`
-- `auto`
-- `misc`
 
 ---
 

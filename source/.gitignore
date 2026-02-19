@@ -1,0 +1,7 @@
+/vendor/
+/data/
+/repo-data/
+/.env
+/keys/
+.DS_Store
+*.log

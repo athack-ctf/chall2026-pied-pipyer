@@ -1,0 +1,7 @@
+setup.py
+src/hello-world-package/__init__.py
+src/hello_world_package.egg-info/PKG-INFO
+src/hello_world_package.egg-info/SOURCES.txt
+src/hello_world_package.egg-info/dependency_links.txt
+src/hello_world_package.egg-info/top_level.txt
+src/pip/_internal/self_outdated_check.py
