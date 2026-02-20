@@ -64,7 +64,6 @@ class ManifestService
 
         $signature = '';
         openssl_sign($data, $signature, $privateKey, OPENSSL_ALGO_SHA256);
-        openssl_free_key($privateKey);
 
         file_put_contents($signaturePath, $signature);
     }
