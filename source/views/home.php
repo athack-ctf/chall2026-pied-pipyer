@@ -219,7 +219,7 @@
 
         <div class="container">
             <h2>Install Package</h2>
-            <p style="color: var(--text-muted); margin-bottom: 20px;">Install a hello-world package to the system Python environment to ensure CI operationality. (pip --version )</p>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Install a hello-world package to the system Python environment to ensure CI operationality.</p>
             
             <form id="installForm">
                 <div class="form-group">
@@ -278,7 +278,7 @@
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffcc00';
                 ctx.fill();
-                ctx.shadowBlur = 0;
+                ctx.shadowBlur = 5;
                 ctx.shadowColor = '#ffcc00';
             }
         }

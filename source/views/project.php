@@ -74,7 +74,7 @@
             position: relative;
             border: 1px solid rgba(255, 204, 0, 0.2);
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-            backdrop-filter: blur(10px);
+            /* backdrop-filter: blur(10px); */
             box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         }
         .container::before {

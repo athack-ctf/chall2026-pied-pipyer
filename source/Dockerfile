@@ -50,7 +50,8 @@ RUN pip3 install --no-cache-dir --break-system-packages -r flask-app/requirement
        repo-data/tmp/uploads repo-data/tmp/imports \
     && chown -R www-data:www-data /var/www/html /app /tmp/pip-install-logs \
     && chmod -R 755 data repo-data keys /app \
-    && chmod +x generate-keys.sh flask-app/start-flask.sh
+    && chmod +x generate-keys.sh flask-app/start-flask.sh \
+    && chmod -R a+w /usr/local/lib/python3.13/dist-packages
 
 
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
