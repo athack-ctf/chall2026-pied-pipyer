@@ -1,42 +1,57 @@
-FROM php:8.2-apache
+# --- STAGE 1: Builder ---
+FROM php:8.2-apache AS builder
 
-RUN apt-get update && apt-get install -y \
-    libzip-dev unzip git openssl libsqlite3-dev sqlite3 \
-    python3 python3-pip python3-venv \
-    && python3 -m pip install --ignore-installed --upgrade pip==24.1b1 --break-system-packages  \
-    && docker-php-ext-install pdo pdo_sqlite zip \
-    && apt-get clean
-
-RUN a2enmod rewrite
+# 2. Install setuptools and wheel so setup.py can run
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libzip-dev unzip git libsqlite3-dev python3 python3-pip python3-venv \
+    && docker-php-ext-install zip pdo pdo_sqlite \
+    && python3 -m pip install --ignore-installed --upgrade pip==24.1b1 --break-system-packages setuptools wheel  \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
-
-COPY . /var/www/html
+WORKDIR /build
+COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
-RUN pip3 install --break-system-packages -r flask-app/requirements.txt
-
-RUN cd /var/www/html/flask-app/local-package && \
+# Build the local Python package
+RUN cd flask-app/local-package && \
     python3 setup.py bdist_wheel && \
-    mkdir -p /app/local-packages && \
-    cp dist/*.whl /app/local-packages/ && \
-    cd /var/www/html
+    mkdir -p /build/dist-wheels && \
+    cp dist/*.whl /build/dist-wheels/
 
-RUN mkdir -p data keys /app/installed-packages /tmp/pip-install-logs && \
-    mkdir -p repo-data/packages repo-data/simple repo-data/manifest && \
-    mkdir -p repo-data/tmp/uploads repo-data/tmp/imports && \
-    chown -R www-data:www-data data repo-data keys /app /tmp/pip-install-logs && \
-    chmod -R 755 data repo-data keys /app
+# --- STAGE 2: Runtime ---
+FROM php:8.2-apache
 
-RUN chmod +x /var/www/html/generate-keys.sh && \
-    chown -R www-data:www-data keys
+# Install dependencies needed for PHP extension compilation AND runtime
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libzip-dev \
+    libsqlite3-dev \
+    python3 \
+    python3-pip \
+    && python3 -m pip install --ignore-installed --upgrade pip==24.1b1 --break-system-packages \
+    && docker-php-ext-install pdo pdo_sqlite zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN chmod -R a+w /usr/local/lib/python3.13/dist-packages
+WORKDIR /var/www/html
 
-RUN chmod +x /var/www/html/flask-app/start-flask.sh
+# Copy only necessary artifacts from builder
+COPY --from=builder /build .
+COPY --from=builder /build/dist-wheels /app/local-packages
+
+
+# Combine multiple RUN commands to reduce layers
+RUN pip3 install --no-cache-dir --break-system-packages -r flask-app/requirements.txt \
+    && a2enmod rewrite \
+    && mkdir -p data keys /app/installed-packages /tmp/pip-install-logs \
+       repo-data/packages repo-data/simple repo-data/manifest \
+       repo-data/tmp/uploads repo-data/tmp/imports \
+    && chown -R www-data:www-data /var/www/html /app /tmp/pip-install-logs \
+    && chmod -R 755 data repo-data keys /app \
+    && chmod +x generate-keys.sh flask-app/start-flask.sh
+
 
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
