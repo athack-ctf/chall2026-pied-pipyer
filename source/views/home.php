@@ -72,7 +72,7 @@
             border: 1px solid rgba(255, 204, 0, 0.2);
             /* Chamfered corners for sci-fi look */
             clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
-            backdrop-filter: blur(10px);
+            /* backdrop-filter: blur(10px); */
             box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
         }
         .container::before {
@@ -278,12 +278,12 @@
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                 ctx.fillStyle = '#ffcc00';
                 ctx.fill();
-                ctx.shadowBlur = 10;
+                ctx.shadowBlur = 0;
                 ctx.shadowColor = '#ffcc00';
             }
         }
 
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
+        for (let i = 0; i < 50; i++) particles.push(new Particle());
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
