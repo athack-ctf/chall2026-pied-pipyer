@@ -1,25 +1,82 @@
-# Chall - Pied Pipyer
+# @Hack 2026: Pied Pipyer
 
-> An SSRF to supply chain exploitation web challenge
+> Authored by [Harsh](https://github.com/sudo-i-u-harsh11235).
 
-## Challenge Type
+- **Category**: `Web`
+- **Solves**: `17/120`
+- **Tags**: `sponsored`
+- **Protocol**: `http`
 
-- [ ] **OFF**line
-- [X] **ON**line
+> We have uncovered another service running in the Alien Networks. It looks like a python package repository.
+>
+> Maybe we can do one of those supplychain attacks which are infamous nowadays. Find a way to get us their secrets
+>
 
-## Design Type
+## Files
 
-- [ ] **Black**-Box
-- [X] **White**-Box
+- **[Download: source-code.zip](https://github.com/athack-ctf/chall2026-pied-pipyer/raw/refs/heads/main/offline-artifacts/source-code.zip)**
 
-## Designer(s)
+## Access a dockerized instance
 
-- Harsh Sawant
+Run challenge container using docker compose
 
-## Description
+```
+docker compose up -d
+```
 
-The challenge involves exploitation of a specific type of SSRF that involves redirects to obtain private keys which can be used to sign custom packages, which when deployed via the application can then be used to trigger code execution on the system.
+Open below URL on your browser
 
-## Category(ies)
+```
+http://localhost:53018/
+```
 
-- `web`
+<details>
+<summary>
+How to stop/restart challenge?
+</summary>
+
+To stop the challenge run
+
+```
+docker compose stop
+```
+
+To restart the challenge run
+
+```
+docker compose restart
+```
+
+</details>
+
+## Reveal Flag(s)
+
+Did you try solving this challenge?
+<details>
+<summary>
+Yes
+</summary>
+
+Did you **REALLY** try solving this challenge?
+
+<details>
+<summary>
+Yes, I promise!
+</summary>
+
+- Flag 1: `ATHACKCTF{4l13n_5UpplY_Ch41N_m151npu7}`
+
+</details>
+</details>
+
+
+---
+
+## About @Hack
+
+[@Hack](https://athackctf.com/) is an annual CTF (Capture The Flag) competition hosted
+by [HEXPLOIT ALLIANCE](https://hexploit-alliance.com/) and [TECHNATION](https://technationcanada.ca/) at Concordia
+University in Montreal, Canada.
+
+---
+[Check more challenges from @Hack 2026](https://github.com/athack-ctf/AtHackCTF-2026-Challenges).
